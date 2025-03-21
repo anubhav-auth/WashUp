@@ -60,7 +60,7 @@ fun ClothListItem(item: ClothListContent) {
         }
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .size(20.dp)
                 .background(Color.Blue),
             verticalArrangement = Arrangement.Center
         ) {
