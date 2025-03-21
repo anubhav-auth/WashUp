@@ -60,13 +60,13 @@ fun ClothListItem(item: ClothListContent) {
         }
         Column(
             modifier = Modifier
-                .size(20.dp)
+                .fillMaxSize()
                 .background(Color.Blue),
             verticalArrangement = Arrangement.Center
         ) {
-//            Box(modifier = Modifier
-//                .background(Color.White)
-//                .size(20.dp, 10.dp))
+            Box(modifier = Modifier
+                .background(Color.White)
+                .size(20.dp, 10.dp))
         }
     }
 }
