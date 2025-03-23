@@ -57,5 +57,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.compose.material:material-icons-extended-android:1.7.8")
+    implementation(libs.androidx.material.icons.extended.android)
+
+    // Jetpack Compose integration
+    implementation(libs.androidx.navigation.compose)
 }

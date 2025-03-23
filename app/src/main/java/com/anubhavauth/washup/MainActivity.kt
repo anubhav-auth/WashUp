@@ -8,9 +8,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.anubhavauth.washup.ui.theme.Checkout
 import com.anubhavauth.washup.ui.theme.WashUpTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val washUpViewModel: WashUpViewModel by lazy {
+        ViewModelProvider(this)[WashUpViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -69,14 +79,29 @@ class MainActivity : ComponentActivity() {
                         price = 5
                     )
                 )
+                val navController = rememberNavController()
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { paddingVal ->
-                    ClothListMenu(
-                        modifier = Modifier.padding(paddingVal),
-                        clothList
-                    )
+
+                    NavHost(navController, "cloth-list") {
+                        composable("cloth-list") {
+                            ClothListMenu(
+                                modifier = Modifier.padding(paddingVal),
+                                clothList,
+                                washUpViewModel,
+                                navController
+                            )
+                        }
+                        composable("checkout-screen") {
+                            Checkout(
+                                modifier = Modifier.padding(paddingVal),
+                                washUpViewModel,
+                                navController
+                            )
+                        }
+                    }
                 }
             }
         }

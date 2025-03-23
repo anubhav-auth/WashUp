@@ -1,5 +1,6 @@
 package com.anubhavauth.washup
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,12 +21,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,20 +35,49 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun ClothListMenu(modifier: Modifier = Modifier, items: List<ClothListContent>) {
-    var totalPrice by remember { mutableIntStateOf(0) }
+fun ClothListMenu(
+    modifier: Modifier = Modifier,
+    items: List<ClothListContent>,
+    washUpViewModel: WashUpViewModel,
+    navController: NavHostController
+) {
+    var totalPrice by washUpViewModel.totalPrice
+    val itemizedBill by washUpViewModel.itemizedBill
 
     LazyColumn(modifier = modifier) {
         items(items) { item ->
-            ClothListItem(item = item) { quantityChange ->
-                totalPrice += quantityChange * item.price
-            }
+            ClothListItem(
+                item = item,
+                onQuantityChange = { quantityChange ->
+                    totalPrice += quantityChange * item.price
+                    itemizedBill[item.name] =
+                        itemizedBill[item.name]?.plus(quantityChange) ?: quantityChange
+
+                }
+            )
         }
         item {
-            Box(modifier = Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
-                Text("Total Price: RS.$totalPrice", style = androidx.compose.ui.text.TextStyle(fontSize = 24.sp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            ) {
+                Text(
+                    "Total Price: RS.$totalPrice",
+                    style = androidx.compose.ui.text.TextStyle(fontSize = 24.sp)
+                )
+                Text(itemizedBill.toString())
+                Button(
+                    onClick = {
+                        navController.navigate("checkout-screen")
+                    }
+                ) {
+                    Text("bill ->")
+                }
             }
         }
     }
