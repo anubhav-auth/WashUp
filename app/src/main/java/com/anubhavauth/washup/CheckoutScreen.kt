@@ -25,17 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.anubhavauth.washup.ui.theme.AccentColor
+import com.anubhavauth.washup.ui.theme.BackgroundColor
+import com.anubhavauth.washup.ui.theme.PrimaryColor
+import com.anubhavauth.washup.ui.theme.SecondaryColor
+import com.anubhavauth.washup.ui.theme.SurfaceColor
+import com.anubhavauth.washup.ui.theme.TextSecondaryColor
 import java.text.SimpleDateFormat
 import java.util.*
-
-// Using the same color theme as defined in the previous file
-private val PrimaryColor = Color(0xFF4A6572)
-private val SecondaryColor = Color(0xFF344955)
-private val AccentColor = Color(0xFFF9AA33)
-private val BackgroundColor = Color(0xFFF5F5F5)
-private val SurfaceColor = Color.White
-private val TextPrimaryColor = Color(0xFF212121)
-private val TextSecondaryColor = Color(0xFF757575)
 
 @SuppressLint("DefaultLocale")
 @Composable

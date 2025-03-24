@@ -7,17 +7,36 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.rounded.ArrowForward
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,15 +50,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-
-// Define theme colors for a more consistent look
-private val PrimaryColor = Color(0xFF4A6572)
-private val SecondaryColor = Color(0xFF344955)
-private val AccentColor = Color(0xFFF9AA33)
-private val BackgroundColor = Color(0xFFF5F5F5)
-private val SurfaceColor = Color.White
-private val TextPrimaryColor = Color(0xFF212121)
-private val TextSecondaryColor = Color(0xFF757575)
+import com.anubhavauth.washup.ui.theme.AccentColor
+import com.anubhavauth.washup.ui.theme.BackgroundColor
+import com.anubhavauth.washup.ui.theme.PrimaryColor
+import com.anubhavauth.washup.ui.theme.SecondaryColor
+import com.anubhavauth.washup.ui.theme.SurfaceColor
+import com.anubhavauth.washup.ui.theme.TextPrimaryColor
+import com.anubhavauth.washup.ui.theme.TextSecondaryColor
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
@@ -104,9 +121,13 @@ fun ClothListMenu(
                 items(items) { item ->
                     ClothListItem(
                         item = item,
+                        washUpViewModel = washUpViewModel,
                         onQuantityChange = { quantityChange ->
                             totalPrice += quantityChange * item.price
-                            itemizedBill[item.name] = Pair((itemizedBill[item.name]?.first?.plus(quantityChange) ?: quantityChange), item.price)
+                            itemizedBill[item.name] = Pair(
+                                (itemizedBill[item.name]?.first?.plus(quantityChange)
+                                    ?: quantityChange), item.price
+                            )
                         }
                     )
                 }
@@ -122,7 +143,10 @@ fun ClothListMenu(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .shadow(elevation = 12.dp, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                .shadow(
+                    elevation = 12.dp,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+                )
         ) {
             Row(
                 modifier = Modifier
@@ -179,8 +203,16 @@ fun ClothListMenu(
 }
 
 @Composable
-fun ClothListItem(item: ClothListContent, onQuantityChange: (Int) -> Unit) {
-    var noOfItem by remember { mutableIntStateOf(0) }
+fun ClothListItem(
+    item: ClothListContent,
+    washUpViewModel: WashUpViewModel,
+    onQuantityChange: (Int) -> Unit
+) {
+    val itemized by washUpViewModel.itemizedBill
+    var noOfItem by remember {
+        mutableIntStateOf(itemized[item.name]?.first ?: 0)
+    }
+
     val backgroundColor = animateColorAsState(
         targetValue = if (noOfItem > 0) Color(0xFFEDF7ED) else SurfaceColor,
         animationSpec = tween(300),
