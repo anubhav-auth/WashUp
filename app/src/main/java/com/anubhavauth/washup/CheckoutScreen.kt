@@ -52,18 +52,16 @@ fun Checkout(
     val tax = totalPrice * taxRate
     val grandTotal = totalPrice + tax
 
-    // Current date for receipt
     val currentDate = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault()).format(Date())
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(BackgroundColor)
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Header with back button
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -122,7 +120,8 @@ fun Checkout(
                             Text(
                                 text = "WashUp Laundry Services",
                                 style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = PrimaryColor
                             )
 
                             Text(
@@ -177,24 +176,25 @@ fun Checkout(
                                     Text(
                                         text = item,
                                         style = MaterialTheme.typography.bodyLarge,
-                                        fontWeight = FontWeight.Medium
+                                        fontWeight = FontWeight.Medium,
+                                        color = Color.Black
                                     )
 
                                     val quantity = itemizedList[item]?.first ?: 0
                                     val itemPrice = itemizedList[item]?.second ?: 0
-                                    val itemTotal = quantity * itemPrice
 
                                     Text(
                                         text = "₹$itemPrice × $quantity",
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = TextSecondaryColor
+                                        color = Color.Black
                                     )
                                 }
 
                                 Text(
-                                    text = "₹${itemizedList[item]?.second?.times(itemizedList[item]?.second ?: 0)}",
+                                    text = "₹${itemizedList[item]?.second?.times(itemizedList[item]?.first ?: 0)}",
                                     style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black
                                 )
                             }
                         }
@@ -254,7 +254,8 @@ fun Checkout(
                                 )
                                 Text(
                                     text = "₹$totalPrice",
-                                    style = MaterialTheme.typography.bodyMedium
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = TextSecondaryColor
                                 )
                             }
 
@@ -271,7 +272,8 @@ fun Checkout(
                                 )
                                 Text(
                                     text = "₹${String.format("%.2f", tax)}",
-                                    style = MaterialTheme.typography.bodyMedium
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = TextSecondaryColor
                                 )
                             }
 
@@ -292,7 +294,8 @@ fun Checkout(
                                 Text(
                                     text = "Grand Total",
                                     style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = PrimaryColor
                                 )
                                 Text(
                                     text = "₹${String.format("%.2f", grandTotal)}",
@@ -420,23 +423,5 @@ fun Checkout(
                 }
             }
         }
-    }
-}
-
-// Function to get price for each item - you'll need to implement this based on your data structure
-// This is just a placeholder
-private fun getItemPrice(itemName: String): Int {
-    // You should replace this with actual logic to get the price from your data
-    // For example, you might have a map of item names to prices
-    return when (itemName) {
-        "T-Shirt" -> 30
-        "Shirt" -> 50
-        "Pants" -> 60
-        "Jeans" -> 80
-        "Jacket" -> 100
-        "Dress" -> 120
-        "Bedsheet" -> 150
-        "Towel" -> 40
-        else -> 50 // Default price
     }
 }

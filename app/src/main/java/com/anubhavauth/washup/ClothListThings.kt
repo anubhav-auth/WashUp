@@ -53,7 +53,7 @@ fun ClothListMenu(
     val itemizedBill by washUpViewModel.itemizedBill
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(BackgroundColor)
     ) {
