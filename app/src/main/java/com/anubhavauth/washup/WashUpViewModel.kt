@@ -10,5 +10,5 @@ class WashUpViewModel : ViewModel() {
     var totalPrice = mutableIntStateOf(0)
 
     @SuppressLint("MutableCollectionMutableState")
-    val itemizedBill = mutableStateOf(hashMapOf<String, Int>())
+    val itemizedBill = mutableStateOf(hashMapOf<String, Pair<Int, Int>>())
 }
