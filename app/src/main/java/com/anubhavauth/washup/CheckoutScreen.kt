@@ -1,4 +1,4 @@
-package com.anubhavauth.washup.ui.theme
+package com.anubhavauth.washup
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.anubhavauth.washup.WashUpViewModel
 
 @Composable
 fun Checkout(
@@ -16,7 +15,7 @@ fun Checkout(
     navController: NavController
 ) {
     val itemizedList by washUpViewModel.itemizedBill
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         items(itemizedList.keys.toList()){ item ->
             Text("$item pc: ${itemizedList[item]}")
         }

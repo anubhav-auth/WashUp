@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.anubhavauth.washup.ui.theme.Checkout
 import com.anubhavauth.washup.ui.theme.WashUpTheme
 
 class MainActivity : ComponentActivity() {
