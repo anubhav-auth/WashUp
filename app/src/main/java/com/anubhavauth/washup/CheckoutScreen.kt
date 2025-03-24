@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,7 +18,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -159,7 +157,6 @@ fun Checkout(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                // Item breakdown
                 if (itemizedList.isNotEmpty()) {
                     items(itemizedList.keys.toList()) { item ->
                         Card(
@@ -183,8 +180,8 @@ fun Checkout(
                                         fontWeight = FontWeight.Medium
                                     )
 
-                                    val quantity = itemizedList[item] ?: 0
-                                    val itemPrice = getItemPrice(item) // You need to implement this function
+                                    val quantity = itemizedList[item]?.first ?: 0
+                                    val itemPrice = itemizedList[item]?.second ?: 0
                                     val itemTotal = quantity * itemPrice
 
                                     Text(
@@ -195,7 +192,7 @@ fun Checkout(
                                 }
 
                                 Text(
-                                    text = "₹${itemizedList[item]?.times(getItemPrice(item))}",
+                                    text = "₹${itemizedList[item]?.second?.times(itemizedList[item]?.second ?: 0)}",
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontWeight = FontWeight.Bold
                                 )

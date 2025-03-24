@@ -106,8 +106,7 @@ fun ClothListMenu(
                         item = item,
                         onQuantityChange = { quantityChange ->
                             totalPrice += quantityChange * item.price
-                            itemizedBill[item.name] =
-                                itemizedBill[item.name]?.plus(quantityChange) ?: quantityChange
+                            itemizedBill[item.name] = Pair((itemizedBill[item.name]?.first?.plus(quantityChange) ?: quantityChange), item.price)
                         }
                     )
                 }
