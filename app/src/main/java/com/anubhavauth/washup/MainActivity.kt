@@ -79,12 +79,10 @@ class MainActivity : ComponentActivity() {
                     )
                 )
                 val navController = rememberNavController()
-
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { paddingVal ->
-
-                    NavHost(navController, "cloth-list") {
+                    NavHost(navController, "login") {
                         composable("cloth-list") {
                             ClothListMenu(
                                 modifier = Modifier.padding(paddingVal),
@@ -98,6 +96,24 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.padding(paddingVal),
                                 washUpViewModel,
                                 navController
+                            )
+                        }
+                        composable("order-history") {
+                            OrderHistory(
+                                navController = navController,
+                                washUpViewModel = washUpViewModel
+                            )
+                        }
+                        composable("registration") {
+                            Registration(
+                                navController = navController,
+                                washUpViewModel = washUpViewModel
+                            )
+                        }
+                        composable("login") {
+                            Login(
+                                navController = navController,
+                                washUpViewModel = washUpViewModel
                             )
                         }
                     }
